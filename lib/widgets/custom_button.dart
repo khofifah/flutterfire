@@ -4,8 +4,9 @@ import 'package:flutterfire/utils/app_sizes.dart';
 class CustomButton extends StatelessWidget {
   String label;
   Function onPressed;
+  bool isGoogle = false;
 
-  CustomButton({this.label, this.onPressed});
+  CustomButton({this.label, this.onPressed, this.isGoogle});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,21 @@ class CustomButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/icons/google.png'),
-              SizedBox(width: Sizes.s10),
+              isGoogle == true
+                  ? Image.asset(
+                      'assets/icons/google.png',
+                      height: Sizes.s15,
+                      width: Sizes.s15,
+                    )
+                  : SizedBox(),
+              SizedBox(width: isGoogle == true ? Sizes.s10 : 0),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: FontSizes.s16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ),

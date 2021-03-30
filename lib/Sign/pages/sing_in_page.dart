@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire/Sign/view_models/google_view_model.dart';
 import 'package:flutterfire/Sign/view_models/sign_view_model.dart';
 import 'package:flutterfire/Sign/widgets/sign_text.dart';
 import 'package:flutterfire/utils/app_sizes.dart';
@@ -23,6 +24,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final sign = Provider.of<SignViewModel>(context);
+    final google = Provider.of<GoogleViewModel>(context);
 
     return Scaffold(
       body: Container(
@@ -108,9 +110,21 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: Sizes.s15),
               CustomButton(
                 label: 'Sign In With Google',
-                onPressed: () {
-                  print('clicked');
+                onPressed: () async {
+                  await google.signInGoogle().then((value) {
+                    PopupStatus.showFlushbar(
+                      context,
+                      value.status,
+                      value.message,
+                    );
+
+                    if (value.status == true) {
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('home', (route) => false);
+                    }
+                  });
                 },
+                isGoogle: true,
               ),
               SizedBox(height: Sizes.s15),
               isSignUp == true

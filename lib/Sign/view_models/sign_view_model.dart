@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire/Sign/models/sign.dart';
 import 'package:flutterfire/Sign/models/sign_status.dart';
 import 'package:flutterfire/utils/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignViewModel extends ChangeNotifier with SharedPreferencesHandler {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<SignStatus> signUp(String email, String password) async {
     var result;
@@ -102,6 +104,7 @@ class SignViewModel extends ChangeNotifier with SharedPreferencesHandler {
   Future<bool> signOut() async {
     try {
       await auth.signOut();
+      await googleSignIn.signOut();
       setSignData(null);
       return true;
     } catch (e) {

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire/Sign/view_models/google_view_model.dart';
 import 'package:flutterfire/Sign/view_models/sign_view_model.dart';
 import 'package:flutterfire/utils/app_routes.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: <SingleChildWidget>[
-        ChangeNotifierProvider<SignViewModel>(create: (_) => SignViewModel())
+        ChangeNotifierProvider<SignViewModel>(create: (_) => SignViewModel()),
+        ChangeNotifierProvider<GoogleViewModel>(
+            create: (_) => GoogleViewModel()),
       ],
       child: MyApp(),
     ),
